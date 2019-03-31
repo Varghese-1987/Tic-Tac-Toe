@@ -106,5 +106,8 @@ export class AppComponent implements OnInit {
       this.botTurn();
     }
   }
+  trackByFn(index, item) { 
+    return item.id; 
+  }
   
 }

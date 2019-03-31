@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/c59cf0b9-3a7a-458c-8dde-5479ead4379e/resourceGroups/RG-Experiments/providers/Microsoft.Web/sites/ngtictactoe",
+    "appService.deploySubpath": "dist\\tic-tac-toe"
+}
