@@ -83,12 +83,13 @@ export class GameService {
     var bot_move = 0;
 
     // Early Game Strategies
-    bot_move = this.IsMiddleBlockTakenByBot()?this.GetStrategyMiddleBlockTakenByBot():this.GetStrategyMiddleBlockTakenByPlayer();
+    bot_move = this.IsMiddleBlockTakenByBot() ? this.GetStrategyMiddleBlockTakenByBot() : this.GetStrategyMiddleBlockTakenByPlayer();
     if (bot_move > 0) {
       return bot_move;
     }
 
-    
+
+
     // Priortize by checking block that is completing
     bot_move = this.GetCompletingSet();
     if (bot_move > 0) {
@@ -101,6 +102,8 @@ export class GameService {
     if (bot_move > 0) {
       return bot_move;
     }
+
+
 
     //3rd Priority Check If Middle Block Free
     bot_move = this.GetMiddleBlock();
@@ -116,24 +119,33 @@ export class GameService {
   }
 
   GetStrategyMiddleBlockTakenByBot() {
-    if (this.freeBlocksRemaining == 6  && this.CheckCornerBlocksTakenByEnemy()) {
+    if (this.freeBlocksRemaining == 6 && this.CheckCornerBlocksTakenByPlayer()) {
       return this.GetFreeCenterAdjacentBlocks();
     }
     return 0;
   }
 
-  GetStrategyMiddleBlockTakenByPlayer(){
-    if (this.freeBlocksRemaining == 6) {
+  GetStrategyMiddleBlockTakenByPlayer() {
+    debugger;
+    if (this.freeBlocksRemaining == 6 && this.CheckAnyCornerBlocksTakenByPlayer()) {
       return this.GetFreeCornerBlocks();
     }
     return 0;
   }
-  CheckCornerBlocksTakenByEnemy() {
+  CheckCornerBlocksTakenByPlayer() {
     return ((this.blocks[0].free == false && this.blocks[8].free == false && this.blocks[0].value == GameResources.tick_value && this.blocks[0].value == this.blocks[8].value)
       || (this.blocks[2].free == false && this.blocks[6].free == false && this.blocks[2].value == GameResources.tick_value && this.blocks[2].value == this.blocks[6].value)
     );
   }
-
+  CheckAnyCornerBlocksTakenByPlayer() {
+    if ((this.blocks[0].free == false && this.blocks[0].value == GameResources.tick_value) ||
+      (this.blocks[2].free==false && this.blocks[2].value == GameResources.tick_value) ||
+      (this.blocks[6].free==false && this.blocks[6].value == GameResources.tick_value) ||
+      (this.blocks[8].free==false && this.blocks[8].value == GameResources.tick_value)) {
+      return true;
+    }
+    return false;
+  }
 
   GetFreeCenterAdjacentBlocks() {
     if (this.blocks[1].free) {
@@ -272,6 +284,9 @@ export class GameService {
     else if (block8.free == false && block7.free == true && block9.free == false && (block8.value == GameResources.cross_value && block8.value == block9.value)) {
       return 7;
     }
+    else if (block8.free == false && block5.free == false && block2.free == true && (block8.value == GameResources.cross_value && block8.value == block5.value)) {
+      return 2;
+    }
     //Block#9
     else if (block9.free == false && block5.free == false && block1.free == true && (block9.value == GameResources.cross_value && block9.value == block5.value)) {
       return 1;
@@ -373,6 +388,9 @@ export class GameService {
     // Block#8
     else if (block8.free == false && block7.free == true && block9.free == false && (block8.value == GameResources.tick_value && block8.value == block9.value)) {
       return 7;
+    }
+    else if (block8.free == false && block5.free == false && block2.free == true && (block8.value == GameResources.tick_value && block8.value == block5.value)) {
+      return 2;
     }
     //Block#9
     else if (block9.free == false && block5.free == false && block1.free == true && (block9.value == GameResources.tick_value && block9.value == block5.value)) {
