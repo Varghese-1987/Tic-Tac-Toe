@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   constructor(public gs: GameService, public snackBar: MatSnackBar) {
 
   }
-
+//#region  Click Events
   newGame() {
     this.gs.freeBlocksRemaining = 9;
     this.gs.initBlocks();
@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
     this.lock = false;
     this.gs.turn = 0;
   }
-
   resetGame(event) {
     location.reload();
     event.preventDefault();
@@ -71,7 +70,8 @@ export class AppComponent implements OnInit {
     } else {
       this.lock = true;
       this.gs.players[this.gs.turn].score += 1;
-      this.snackBar.open("Winner:", "Player " + (this.gs.turn + 1), {
+      var victor=this.gs.turn==0?'You':'Bot'
+      this.snackBar.open("Winner:", victor, {
         duration: 4000,
       });
 
@@ -80,7 +80,14 @@ export class AppComponent implements OnInit {
     }
 
   }
-
+//#endregion
+//#region Helper Functions  
+changeTurn() {
+    var player = this.gs.changeTurn();
+    if (player == 1) { // Bot Turn
+      this.botTurn();
+    }
+  }
 
   botTurn() {
 
@@ -90,7 +97,7 @@ export class AppComponent implements OnInit {
 
     var bot_selected = this.gs.figureBotMove() - 1;
 
-    if (this.gs.blocks[bot_selected].free == true) {
+    if (this.gs.blocks[bot_selected].free) {
       this.playerClick(bot_selected);
     } else {
       this.botTurn();
@@ -99,15 +106,9 @@ export class AppComponent implements OnInit {
 
   }
 
-
-  changeTurn() {
-    var player = this.gs.changeTurn();
-    if (player == 1) { // Bot Turn
-      this.botTurn();
-    }
-  }
   trackByFn(index, item) { 
     return item.id; 
   }
+  //#endregion
   
 }
