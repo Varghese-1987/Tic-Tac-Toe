@@ -91,13 +91,13 @@ export class GameService {
 
 
     // Priortize by checking block that is completing
-    bot_move = this.GetCompletingSet();
+    bot_move = this.GetBotCompletingSet();
     if (bot_move > 0) {
       return bot_move;
     }
 
     // 2nd Priority Block enemy from completing Set
-    bot_move = this.blockEnemyAttemptCompleteSet();
+    bot_move = this.blockPlayerAttemptCompleteSet();
 
     if (bot_move > 0) {
       return bot_move;
@@ -126,7 +126,6 @@ export class GameService {
   }
 
   GetStrategyMiddleBlockTakenByPlayer() {
-    debugger;
     if (this.freeBlocksRemaining == 6 && this.CheckAnyCornerBlocksTakenByPlayer()) {
       return this.GetFreeCornerBlocks();
     }
@@ -139,9 +138,9 @@ export class GameService {
   }
   CheckAnyCornerBlocksTakenByPlayer() {
     if ((this.blocks[0].free == false && this.blocks[0].value == GameResources.tick_value) ||
-      (this.blocks[2].free==false && this.blocks[2].value == GameResources.tick_value) ||
-      (this.blocks[6].free==false && this.blocks[6].value == GameResources.tick_value) ||
-      (this.blocks[8].free==false && this.blocks[8].value == GameResources.tick_value)) {
+      (this.blocks[2].free == false && this.blocks[2].value == GameResources.tick_value) ||
+      (this.blocks[6].free == false && this.blocks[6].value == GameResources.tick_value) ||
+      (this.blocks[8].free == false && this.blocks[8].value == GameResources.tick_value)) {
       return true;
     }
     return false;
@@ -196,112 +195,19 @@ export class GameService {
 	/* 
 		Check if any Block Set is completing
 	*/
-  GetCompletingSet() {
-
-    var block1 = this.blocks[0];
-    var block2 = this.blocks[1];
-    var block3 = this.blocks[2];
-
-    var block4 = this.blocks[3];
-    var block5 = this.blocks[4];
-    var block6 = this.blocks[5];
-
-    var block7 = this.blocks[6];
-    var block8 = this.blocks[7];
-    var block9 = this.blocks[8];
-
-    // Block#1
-    if (block1.free == false && block2.free == true && block3.free == false && (block1.value == GameResources.cross_value && block1.value == block3.value)) {
-      return 2;
-
-    } else if (block1.free == false && block2.free == false && block3.free == true && (block1.value == GameResources.cross_value && block1.value == block2.value)) {
-      return 3;
-
-    } else if (block1.free == false && block4.free == true && block7.free == false && (block1.value == GameResources.cross_value && block1.value == block7.value)) {
-      return 4;
-
-    } else if (block1.free == false && block4.free == false && block7.free == true && (block1.value == GameResources.cross_value && block1.value == block4.value)) {
-      return 7;
-
-    } else if (block1.free == false && block5.free == true && block9.free == false && (block1.value == GameResources.cross_value && block1.value == block9.value)) {
-      return 5;
-
-    } else if (block1.free == false && block5.free == false && block9.free == true && (block1.value == GameResources.cross_value && block1.value == block5.value)) {
-      return 9;
-
-      // Block#2
-    } else if (block2.free == false && block3.free == false && block1.free == true && (block2.value == GameResources.cross_value && block2.value == block3.value)) {
-      return 1;
-
-    } else if (block2.free == false && block3.free == true && block1.free == false && (block2.value == GameResources.cross_value && block2.value == block1.value)) {
-      return 3;
-
-    } else if (block2.free == false && block8.free == false && block5.free == true && (block2.value == GameResources.cross_value && block2.value == block8.value)) {
-      return 5;
-
-    } else if (block2.free == false && block8.free == true && block5.free == false && (block2.value == GameResources.cross_value && block2.value == block5.value)) {
-      return 8;
-
-      // Block#3
-    } else if (block3.free == false && block6.free == true && block9.free == false && (block3.value == GameResources.cross_value && block3.value == block9.value)) {
-      return 6;
-
-    } else if (block3.free == false && block9.free == true && block6.free == false && (block3.value == GameResources.cross_value && block3.value == block6.value)) {
-      return 9;
-
-    } else if (block3.free == false && block5.free == true && block7.free == false && (block3.value == GameResources.cross_value && block3.value == block7.value)) {
-      return 5;
-
-    } else if (block3.free == false && block7.free == true && block5.free == false && (block3.value == GameResources.cross_value && block3.value == block5.value)) {
-      return 7;
-
-      // Block#4
-    } else if (block4.free == false && block5.free == true && block6.free == false && (block4.value == GameResources.cross_value && block4.value == block6.value)) {
-      return 5;
-
-    } else if (block4.free == false && block6.free == true && block5.free == false && (block4.value == GameResources.cross_value && block4.value == block5.value)) {
-      return 6;
-    }
-    else if (block4.free == false && block1.free == true && block7.free == false && (block4.value == GameResources.cross_value && block4.value == block7.value)) {
-      return 1;
-    }
-
-    // Block#5
-    else if (block5.free == false && block4.free == true && block6.free == false && (block5.value == GameResources.cross_value && block5.value == block6.value)) {
-      return 4;
-    }
-    // Block#7
-    else if (block7.free == false && block8.free == true && block9.free == false && (block7.value == GameResources.cross_value && block7.value == block9.value)) {
-      return 8;
-    }
-    else if (block7.free == false && block5.free == false && block3.free == true && (block7.value == GameResources.cross_value && block7.value == block5.value)) {
-      return 3;
-    }
-    else if (block7.free == false && block9.free == true && block8.free == false && (block7.value == GameResources.cross_value && block7.value == block8.value)) {
-      return 9;
-    }
-    // Block#8
-    else if (block8.free == false && block7.free == true && block9.free == false && (block8.value == GameResources.cross_value && block8.value == block9.value)) {
-      return 7;
-    }
-    else if (block8.free == false && block5.free == false && block2.free == true && (block8.value == GameResources.cross_value && block8.value == block5.value)) {
-      return 2;
-    }
-    //Block#9
-    else if (block9.free == false && block5.free == false && block1.free == true && (block9.value == GameResources.cross_value && block9.value == block5.value)) {
-      return 1;
-    }
-    else { // If none is applicable
-      return 0;
-    }
-
+  GetBotCompletingSet() {
+    return this.getCompleteSet(GameResources.cross_value);
   }
 
 
 	/* 
 		Block Enemy Attempt to Complete Set
 	*/
-  blockEnemyAttemptCompleteSet() {
+  blockPlayerAttemptCompleteSet() {
+    return this.getCompleteSet(GameResources.tick_value);
+  }
+
+  getCompleteSet(blockValue: string) {
     var block1 = this.blocks[0];
     var block2 = this.blocks[1];
     var block3 = this.blocks[2];
@@ -314,86 +220,85 @@ export class GameService {
     var block8 = this.blocks[7];
     var block9 = this.blocks[8];
 
-
     // Block#1
-    if (block1.free == false && block2.free == true && block3.free == false && (block1.value == GameResources.tick_value && block1.value == block3.value)) {
+    if (block1.free == false && block2.free == true && block3.free == false && (block1.value == blockValue && block1.value == block3.value)) {
       return 2;
 
-    } else if (block1.free == false && block2.free == false && block3.free == true && (block1.value == GameResources.tick_value && block1.value == block2.value)) {
+    } else if (block1.free == false && block2.free == false && block3.free == true && (block1.value == blockValue && block1.value == block2.value)) {
       return 3;
 
-    } else if (block1.free == false && block4.free == true && block7.free == false && (block1.value == GameResources.tick_value && block1.value == block7.value)) {
+    } else if (block1.free == false && block4.free == true && block7.free == false && (block1.value == blockValue && block1.value == block7.value)) {
       return 4;
 
-    } else if (block1.free == false && block4.free == false && block7.free == true && (block1.value == GameResources.tick_value && block1.value == block4.value)) {
+    } else if (block1.free == false && block4.free == false && block7.free == true && (block1.value == blockValue && block1.value == block4.value)) {
       return 7;
 
-    } else if (block1.free == false && block5.free == true && block9.free == false && (block1.value == GameResources.tick_value && block1.value == block9.value)) {
+    } else if (block1.free == false && block5.free == true && block9.free == false && (block1.value == blockValue && block1.value == block9.value)) {
       return 5;
 
-    } else if (block1.free == false && block5.free == false && block9.free == true && (block1.value == GameResources.tick_value && block1.value == block5.value)) {
+    } else if (block1.free == false && block5.free == false && block9.free == true && (block1.value == blockValue && block1.value == block5.value)) {
       return 9;
 
       // Block#2
-    } else if (block2.free == false && block3.free == false && block1.free == true && (block2.value == GameResources.tick_value && block2.value == block3.value)) {
+    } else if (block2.free == false && block3.free == false && block1.free == true && (block2.value == blockValue && block2.value == block3.value)) {
       return 1;
 
-    } else if (block2.free == false && block3.free == true && block1.free == false && (block2.value == GameResources.tick_value && block2.value == block1.value)) {
+    } else if (block2.free == false && block3.free == true && block1.free == false && (block2.value == blockValue && block2.value == block1.value)) {
       return 3;
 
-    } else if (block2.free == false && block8.free == false && block5.free == true && (block2.value == GameResources.tick_value && block2.value == block8.value)) {
+    } else if (block2.free == false && block8.free == false && block5.free == true && (block2.value == blockValue && block2.value == block8.value)) {
       return 5;
 
-    } else if (block2.free == false && block8.free == true && block5.free == false && (block2.value == GameResources.tick_value && block2.value == block5.value)) {
+    } else if (block2.free == false && block8.free == true && block5.free == false && (block2.value == blockValue && block2.value == block5.value)) {
       return 8;
 
       // Block#3
-    } else if (block3.free == false && block6.free == true && block9.free == false && (block3.value == GameResources.tick_value && block3.value == block9.value)) {
+    } else if (block3.free == false && block6.free == true && block9.free == false && (block3.value == blockValue && block3.value == block9.value)) {
       return 6;
 
-    } else if (block3.free == false && block9.free == true && block6.free == false && (block3.value == GameResources.tick_value && block3.value == block6.value)) {
+    } else if (block3.free == false && block9.free == true && block6.free == false && (block3.value == blockValue && block3.value == block6.value)) {
       return 9;
 
-    } else if (block3.free == false && block5.free == true && block7.free == false && (block3.value == GameResources.tick_value && block3.value == block7.value)) {
+    } else if (block3.free == false && block5.free == true && block7.free == false && (block3.value == blockValue && block3.value == block7.value)) {
       return 5;
 
-    } else if (block3.free == false && block7.free == true && block5.free == false && (block3.value == GameResources.tick_value && block3.value == block5.value)) {
+    } else if (block3.free == false && block7.free == true && block5.free == false && (block3.value == blockValue && block3.value == block5.value)) {
       return 7;
 
       // Block#4
-    } else if (block4.free == false && block5.free == true && block6.free == false && (block4.value == GameResources.tick_value && block4.value == block6.value)) {
+    } else if (block4.free == false && block5.free == true && block6.free == false && (block4.value == blockValue && block4.value == block6.value)) {
       return 5;
 
-    } else if (block4.free == false && block6.free == true && block5.free == false && (block4.value == GameResources.tick_value && block4.value == block5.value)) {
+    } else if (block4.free == false && block6.free == true && block5.free == false && (block4.value == blockValue && block4.value == block5.value)) {
       return 6;
     }
-    else if (block4.free == false && block1.free == true && block7.free == false && (block4.value == GameResources.tick_value && block4.value == block7.value)) {
+    else if (block4.free == false && block1.free == true && block7.free == false && (block4.value == blockValue && block4.value == block7.value)) {
       return 1;
     }
 
     // Block#5
-    else if (block5.free == false && block4.free == true && block6.free == false && (block5.value == GameResources.tick_value && block5.value == block6.value)) {
+    else if (block5.free == false && block4.free == true && block6.free == false && (block5.value == blockValue && block5.value == block6.value)) {
       return 4;
     }
     // Block#7
-    else if (block7.free == false && block8.free == true && block9.free == false && (block7.value == GameResources.tick_value && block7.value == block9.value)) {
+    else if (block7.free == false && block8.free == true && block9.free == false && (block7.value == blockValue && block7.value == block9.value)) {
       return 8;
     }
-    else if (block7.free == false && block5.free == false && block3.free == true && (block7.value == GameResources.tick_value && block7.value == block5.value)) {
+    else if (block7.free == false && block5.free == false && block3.free == true && (block7.value == blockValue && block7.value == block5.value)) {
       return 3;
     }
-    else if (block7.free == false && block9.free == true && block8.free == false && (block7.value == GameResources.tick_value && block7.value == block8.value)) {
+    else if (block7.free == false && block9.free == true && block8.free == false && (block7.value == blockValue && block7.value == block8.value)) {
       return 9;
     }
     // Block#8
-    else if (block8.free == false && block7.free == true && block9.free == false && (block8.value == GameResources.tick_value && block8.value == block9.value)) {
+    else if (block8.free == false && block7.free == true && block9.free == false && (block8.value == blockValue && block8.value == block9.value)) {
       return 7;
     }
-    else if (block8.free == false && block5.free == false && block2.free == true && (block8.value == GameResources.tick_value && block8.value == block5.value)) {
+    else if (block8.free == false && block5.free == false && block2.free == true && (block8.value == blockValue && block8.value == block5.value)) {
       return 2;
     }
     //Block#9
-    else if (block9.free == false && block5.free == false && block1.free == true && (block9.value == GameResources.tick_value && block9.value == block5.value)) {
+    else if (block9.free == false && block5.free == false && block1.free == true && (block9.value == blockValue && block9.value == block5.value)) {
       return 1;
     }
     else { // If none is applicable
