@@ -56,10 +56,10 @@ export class AppComponent implements OnInit {
     this.gs.blocks[i].free = false;
 
     if (this.gs.turn == 0) { // Player1 Turn
-      this.gs.blocks[i].setValue(GameResources.tick_value);
+      this.gs.blocks[i].setValue(GameResources.player_value);
 
     } else { // Bot Turn
-      this.gs.blocks[i].setValue(GameResources.cross_value);
+      this.gs.blocks[i].setValue(GameResources.bot_value);
     }
 
     var complete = this.gs.blockSetComplete();

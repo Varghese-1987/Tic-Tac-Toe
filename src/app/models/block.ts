@@ -14,10 +14,10 @@ export class Block {
 	setValue(value) {
 		this.value = value
 
-		if( this.value == GameResources.tick_value ) {
-			this.symbol = GameResources.tick_symbol;
+		if( this.value == GameResources.player_value ) {
+			this.symbol = GameResources.player_symbol;
 		} else {
-			this.symbol = GameResources.cross_symbol;
+			this.symbol = GameResources.bot_symbol;
 		}
 	}   
 }

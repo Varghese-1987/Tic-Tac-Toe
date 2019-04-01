@@ -1,7 +1,7 @@
 export class GameResources {
-  public static  readonly tick_symbol:string='done';
-  public static readonly tick_value:string='tick';
-  public static  readonly cross_symbol:string='close';
-  public static  readonly cross_value:string='close';
+  public static  readonly player_symbol:string='done';
+  public static readonly player_value:string='tick';
+  public static  readonly bot_symbol:string='close';
+  public static  readonly bot_value:string='close';
     
 }

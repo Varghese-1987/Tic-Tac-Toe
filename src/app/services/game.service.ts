@@ -132,15 +132,15 @@ export class GameService {
     return 0;
   }
   CheckCornerBlocksTakenByPlayer() {
-    return ((this.blocks[0].free == false && this.blocks[8].free == false && this.blocks[0].value == GameResources.tick_value && this.blocks[0].value == this.blocks[8].value)
-      || (this.blocks[2].free == false && this.blocks[6].free == false && this.blocks[2].value == GameResources.tick_value && this.blocks[2].value == this.blocks[6].value)
+    return ((this.blocks[0].free == false && this.blocks[8].free == false && this.blocks[0].value == GameResources.player_value && this.blocks[0].value == this.blocks[8].value)
+      || (this.blocks[2].free == false && this.blocks[6].free == false && this.blocks[2].value == GameResources.player_value && this.blocks[2].value == this.blocks[6].value)
     );
   }
   CheckAnyCornerBlocksTakenByPlayer() {
-    if ((this.blocks[0].free == false && this.blocks[0].value == GameResources.tick_value) ||
-      (this.blocks[2].free == false && this.blocks[2].value == GameResources.tick_value) ||
-      (this.blocks[6].free == false && this.blocks[6].value == GameResources.tick_value) ||
-      (this.blocks[8].free == false && this.blocks[8].value == GameResources.tick_value)) {
+    if ((this.blocks[0].free == false && this.blocks[0].value == GameResources.player_value) ||
+      (this.blocks[2].free == false && this.blocks[2].value == GameResources.player_value) ||
+      (this.blocks[6].free == false && this.blocks[6].value == GameResources.player_value) ||
+      (this.blocks[8].free == false && this.blocks[8].value == GameResources.player_value)) {
       return true;
     }
     return false;
@@ -179,7 +179,7 @@ export class GameService {
     return 0;
   }
   IsMiddleBlockTakenByBot() {
-    if (this.blocks[4].value == GameResources.cross_value) {
+    if (this.blocks[4].value == GameResources.bot_value) {
       return true;
     }
     return false;
@@ -196,7 +196,7 @@ export class GameService {
 		Check if any Block Set is completing
 	*/
   GetBotCompletingSet() {
-    return this.getCompleteSet(GameResources.cross_value);
+    return this.getCompleteSet(GameResources.bot_value);
   }
 
 
@@ -204,7 +204,7 @@ export class GameService {
 		Block Enemy Attempt to Complete Set
 	*/
   blockPlayerAttemptCompleteSet() {
-    return this.getCompleteSet(GameResources.tick_value);
+    return this.getCompleteSet(GameResources.player_value);
   }
 
   getCompleteSet(blockValue: string) {
