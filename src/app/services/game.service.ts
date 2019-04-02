@@ -81,7 +81,6 @@ export class GameService {
 
   figureBotMove() {
     var bot_move = 0;
-    debugger;
     // Early Game Strategies
     bot_move = this.IsMiddleBlockTakenByBot() ? this.GetStrategyMiddleBlockTakenByBot() : this.GetStrategyMiddleBlockTakenByPlayer();
     if (bot_move > 0) {
