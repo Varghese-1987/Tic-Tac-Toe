@@ -81,7 +81,7 @@ export class GameService {
 
   figureBotMove() {
     var bot_move = 0;
-
+    debugger;
     // Early Game Strategies
     bot_move = this.IsMiddleBlockTakenByBot() ? this.GetStrategyMiddleBlockTakenByBot() : this.GetStrategyMiddleBlockTakenByPlayer();
     if (bot_move > 0) {
@@ -300,6 +300,9 @@ export class GameService {
     //Block#9
     else if (block9.free == false && block5.free == false && block1.free == true && (block9.value == blockValue && block9.value == block5.value)) {
       return 1;
+    }
+    else if (block9.free == false && block6.free == false && block3.free == true && (block9.value == blockValue && block9.value == block6.value)) {
+      return 3;
     }
     else { // If none is applicable
       return 0;
