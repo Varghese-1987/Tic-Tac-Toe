@@ -1,0 +1,21 @@
+:host::ng-deep {
+  .game-area {
+    margin-top: 25px;
+    width: 450px;
+  }
+  .tick-tack-grid {
+    div mat-grid-tile {
+      cursor: pointer;
+      background: #e9b571;
+      i.material-icons.tick {
+        color: green;
+        font-size: 37px;
+      }
+
+      i.material-icons.close {
+        color: red;
+        font-size: 37px;
+      }
+    }
+  }
+}
